@@ -21,6 +21,12 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArslanHayat12/advAnimations.git"
+  },
+  "homepage": "https://github.com/ArslanHayat12/advAnimations",
+  "keywords": ["react", "animations", "advanced", "hook"],
   "peerDependencies": {
     "react": ">=16"
   },
