@@ -26,7 +26,12 @@
     "url": "https://github.com/ArslanHayat12/advAnimations.git"
   },
   "homepage": "https://github.com/ArslanHayat12/advAnimations",
-  "keywords": ["react", "animations", "advanced", "hook"],
+  "keywords": [
+    "react",
+    "animations",
+    "advanced",
+    "hook"
+  ],
   "peerDependencies": {
     "react": ">=16"
   },
@@ -73,5 +78,8 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "goober": "^2.0.37"
   }
 }
