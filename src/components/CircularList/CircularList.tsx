@@ -1,5 +1,4 @@
 import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react';
-import { Rotation } from '../../types';
 import { makeAnglesForCircularList } from '../../utils';
 import {
   Bar,
@@ -27,10 +26,8 @@ const CircularList: React.FC<CircularListProps> = ({ list }) => {
     (clickedItemIndex: number) => {
       // If the clicked item is already selected, do nothing
       if (clickedItemIndex !== selectedIndex) {
-        let subtractAngle: number = (clickedItemIndex - selectedIndex) * 30; // It tells how many list items to move clockwise/anti-clockwise
-        let countNinetyDegree: number = 0; // This is useful when skipping two or more places. e.g item1 and item2 both are at 90deg but we have to subtract 60 from item2 and 30 from item1
-        const direction: Rotation =
-          clickedItemIndex < selectedIndex ? 'clockwise' : 'anti-clockwise';
+        const subtractAngle: number = (clickedItemIndex - selectedIndex) * 30; // It tells how many list items to move clockwise/anti-clockwise
+        let countNinetyDegree: number = 1; // This is useful when skipping two or more places. e.g item1 and item2 both are at 90deg but we have to subtract 60 from item2 and 30 from item1
         const updatedAngles: number[] = []; // To temporarily store the updated angles
 
         //Traversing all the elements refrences of the list
@@ -39,29 +36,28 @@ const CircularList: React.FC<CircularListProps> = ({ list }) => {
             let angle: number = 0; // To temporarily store the updated angle of current list item after performing calculations
 
             if (
-              direction === 'anti-clockwise' &&
-              elementIndex < selectedIndex + 3 + subtractAngle / 30 &&
-              elementIndex > selectedIndex - 2 - subtractAngle / 30
+              elementIndex >= clickedItemIndex - 2 &&
+              elementIndex <= clickedItemIndex + 2
             ) {
+              let subtract: number = subtractAngle;
+
               if (angles[elementIndex] === 90) {
-                subtractAngle = subtractAngle - countNinetyDegree * 30;
+                subtract = Math.abs(
+                  Math.floor(subtractAngle / countNinetyDegree)
+                );
+                countNinetyDegree++;
+              } else if (angles[elementIndex] === -90) {
+                subtract = -30 * countNinetyDegree;
                 countNinetyDegree++;
               }
 
-              angle = angles[elementIndex] - subtractAngle;
-            } else if (
-              direction === 'clockwise' &&
-              elementIndex < selectedIndex + 3 - subtractAngle / 30 &&
-              elementIndex > selectedIndex - 4 + subtractAngle / 30
-            ) {
-              if (angles[elementIndex] === -90) {
-                subtractAngle = subtractAngle + countNinetyDegree * 30;
-                countNinetyDegree--;
-              }
-
-              angle = angles[elementIndex] - subtractAngle;
+              angle = angles[elementIndex] - subtract;
             } else {
-              angle = angles[elementIndex];
+              if (elementIndex > clickedItemIndex + 2) {
+                angle = 90;
+              } else if (elementIndex < clickedItemIndex - 2) {
+                angle = -90;
+              }
             }
 
             updatedAngles.push(angle);
