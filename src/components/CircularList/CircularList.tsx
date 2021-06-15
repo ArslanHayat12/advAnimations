@@ -13,7 +13,7 @@ interface CircularListProps {
   list: string[];
 }
 
-const CircularList: React.FC<CircularListProps> = ({ list }) => {
+export const CircularList: React.FC<CircularListProps> = ({ list }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [angles, setAngles] = useState<number[]>(
     makeAnglesForCircularList(30, list.length)
@@ -107,5 +107,3 @@ const CircularList: React.FC<CircularListProps> = ({ list }) => {
     </Fragment>
   );
 };
-
-export default CircularList;

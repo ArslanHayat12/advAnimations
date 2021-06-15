@@ -16,7 +16,7 @@ interface CarouselProps {
   interval: number;
 }
 
-const Carousel: React.FC<CarouselProps> = ({
+export const Carousel: React.FC<CarouselProps> = ({
   imagePaths,
   autoplay = false,
   interval = 0,
@@ -82,5 +82,3 @@ const Carousel: React.FC<CarouselProps> = ({
     </CarouselContainer>
   );
 };
-
-export default Carousel;
