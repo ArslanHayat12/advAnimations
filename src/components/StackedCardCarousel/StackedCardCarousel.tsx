@@ -16,7 +16,7 @@ interface StackedCardCarouselProps {
   cardsContentColor?: string;
 }
 
-const StackedCardCarousel: FC<StackedCardCarouselProps> = ({
+export const StackedCardCarousel: FC<StackedCardCarouselProps> = ({
   cardsContent,
   cardsBackgroundColor,
   cardsContentColor,
@@ -59,5 +59,3 @@ const StackedCardCarousel: FC<StackedCardCarouselProps> = ({
 
   return <StackStyle>{renderCards}</StackStyle>;
 };
-
-export default StackedCardCarousel;
