@@ -98,7 +98,9 @@ export const CircularList: React.FC<CircularListProps> = ({
       return (
         <ListItem
           key={itemId}
-          ref={(element) => (wheelRef.current[index] = element)}
+          ref={(element: HTMLDivElement | null) =>
+            (wheelRef.current[index] = element)
+          }
           angle={itemAngle}
         >
           <Bar />
