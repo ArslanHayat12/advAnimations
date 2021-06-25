@@ -1,4 +1,5 @@
 import React, { Fragment, useCallback, useMemo, useRef, useState } from 'react';
+import { CircularListItem } from '../../types';
 import { makeAnglesForCircularList } from '../../utils';
 import {
   Bar,
@@ -7,13 +8,24 @@ import {
   CircleInner,
   ListItem,
   ItemDiv,
+  ImageItem,
+  TextItem,
+  CircleBorderStyle,
 } from './Style';
 
 interface CircularListProps {
-  list: string[];
+  list: CircularListItem[];
+  showBorder: boolean;
+  backgroundColor?: string;
+  textColor?: string;
 }
 
-export const CircularList: React.FC<CircularListProps> = ({ list }) => {
+export const CircularList: React.FC<CircularListProps> = ({
+  list,
+  backgroundColor,
+  textColor,
+  showBorder,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [angles, setAngles] = useState<number[]>(
     makeAnglesForCircularList(30, list.length)
@@ -77,30 +89,45 @@ export const CircularList: React.FC<CircularListProps> = ({ list }) => {
   const renderList = useMemo(() => {
     return list.map((listItem, index) => {
       const itemAngle: number = angles[index];
+      const itemId: number = listItem.id;
+      const imagePath: string | undefined = listItem.path;
+      const text: string = listItem.value;
+      const isTextOverflow: boolean = text.length > 15;
+      const isImage: boolean = imagePath !== undefined ? true : false;
 
       return (
         <ListItem
-          key={index}
-          ref={(element: HTMLDivElement) => (wheelRef.current[index] = element)}
+          key={itemId}
+          ref={(element: HTMLDivElement | null) =>
+            (wheelRef.current[index] = element)
+          }
           angle={itemAngle}
         >
           <Bar />
           <ItemDiv
             angle={itemAngle}
             selected={index === selectedIndex}
+            isimage={isImage}
+            background={backgroundColor}
+            color={textColor}
             onClick={() => onItemClick(index)}
           >
-            {listItem}
+            {imagePath !== undefined ? (
+              <ImageItem src={imagePath} />
+            ) : (
+              <TextItem overflow={isTextOverflow}>{text}</TextItem>
+            )}
           </ItemDiv>
         </ListItem>
       );
     });
-  }, [list, angles, selectedIndex, onItemClick]);
+  }, [list, angles, selectedIndex, backgroundColor, textColor, onItemClick]);
 
   return (
     <Fragment>
       <Container>
         <Circle>
+          {showBorder && <CircleBorderStyle />}
           <CircleInner>{renderList}</CircleInner>
         </Circle>
       </Container>
