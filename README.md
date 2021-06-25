@@ -20,14 +20,22 @@ npm install advAnimations
 ## Circular List
 
 ```tsx
-<CircularList list={list}>
+<CircularList
+  list={list}
+  showBorder={true}
+  backgroundColor="#0000"
+  textColor="#ffffff"
+/>
 ```
 
 ### Props
 
-| Name | Value      | Description                   |
-| ---- | ---------- | ----------------------------- |
-| list | `string[]` | List of items to be displayed |
+| Name            | Value                | Description                                                                                                                                                                                                                                                                                                                                                                                |
+| --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| list            | `CircularListItem[]` | List of items to be displayed. Each _CircularListItem_ is of the shape `{ id: number, value: string, path: string }` where _id_ is the unique id of the item, _value_ is the text to be displayed, and _path_ is the path of image to be displayed. _path_ is optional in it, if it is not given then the text given in _value_ will be displayed otherwise the picture will be displayed. |
+| showBorder      | `boolean`            | Displays/hides the circle border.                                                                                                                                                                                                                                                                                                                                                          |
+| backgroundColor | `string`             | Sets the background color of text item. It is optional.                                                                                                                                                                                                                                                                                                                                    |
+| textColor       | `string`             | Sets the text color of the text item. It is optional.                                                                                                                                                                                                                                                                                                                                      |
 
 ### Demo
 
